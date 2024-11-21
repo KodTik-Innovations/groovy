@@ -24,6 +24,7 @@ import org.codehaus.groovy.control.customizers.CompilationCustomizer;
 import org.codehaus.groovy.control.io.NullWriter;
 import org.codehaus.groovy.control.messages.WarningMessage;
 import org.objectweb.asm.Opcodes;
+
 import static org.codehaus.groovy.reflection.android.AndroidSupport.isDalvik;
 import static org.codehaus.groovy.reflection.android.AndroidSupport.isRunningAndroid;
 
@@ -107,44 +108,31 @@ public class CompilerConfiguration {
     public static final String JDK22 = "22";
     /** This (<code>"23"</code>) is the value for targetBytecode to compile for a JDK 23. */
     public static final String JDK23 = "23";
+    /** This (<code>"24"</code>) is the value for targetBytecode to compile for a JDK 24. */
+    public static final String JDK24 = "24";
 
     /**
      * JDK version to bytecode version mapping.
      */
-      public static final Map<String, Integer> JDK_TO_BYTECODE_VERSION_MAP =
-      Maps.of(
-          JDK8,
-          Opcodes.V1_8,
-          JDK9,
-          Opcodes.V9,
-          JDK10,
-          Opcodes.V10,
-          JDK11,
-          Opcodes.V11,
-          JDK12,
-          Opcodes.V12,
-          JDK13,
-          Opcodes.V13,
-          JDK14,
-          Opcodes.V14,
-          JDK15,
-          Opcodes.V15,
-          JDK16,
-          Opcodes.V16,
-          JDK17,
-          Opcodes.V17,
-          JDK18,
-          Opcodes.V18,
-          JDK19,
-          Opcodes.V19,
-          JDK20,
-          Opcodes.V20,
-          JDK21,
-          Opcodes.V21,
-          JDK22,
-          Opcodes.V22,
-          JDK23,
-          Opcodes.V23);
+    public static final Map<String, Integer> JDK_TO_BYTECODE_VERSION_MAP = Maps.of(
+             JDK8, Opcodes.V1_8,
+             JDK9, Opcodes.V9,
+            JDK10, Opcodes.V10,
+            JDK11, Opcodes.V11,
+            JDK12, Opcodes.V12,
+            JDK13, Opcodes.V13,
+            JDK14, Opcodes.V14,
+            JDK15, Opcodes.V15,
+            JDK16, Opcodes.V16,
+            JDK17, Opcodes.V17,
+            JDK18, Opcodes.V18,
+            JDK19, Opcodes.V19,
+            JDK20, Opcodes.V20,
+            JDK21, Opcodes.V21,
+            JDK22, Opcodes.V22,
+            JDK23, Opcodes.V23,
+            JDK24, Opcodes.V24
+    );
 
     public static final String DEFAULT_TARGET_BYTECODE = defaultTargetBytecode();
 
@@ -756,7 +744,7 @@ public class CompilerConfiguration {
             numeric = Integer.parseInt(text);
         } catch (NumberFormatException e) {
             text = text.toLowerCase();
-            if (text.equals("none")) {
+            if ("none".equals(text)) {
                 numeric = WarningMessage.NONE;
             } else if (text.startsWith("likely")) {
                 numeric = WarningMessage.LIKELY_ERRORS;
@@ -783,13 +771,13 @@ public class CompilerConfiguration {
         if (text != null) setTargetBytecode(text);
 
         text = configuration.getProperty("groovy.parameters");
-        if (text != null) setParameters(text.equalsIgnoreCase("true"));
+        if (text != null) setParameters("true".equalsIgnoreCase(text));
 
         text = configuration.getProperty("groovy.preview.features");
-        if (text != null) setPreviewFeatures(text.equalsIgnoreCase("true"));
+        if (text != null) setPreviewFeatures("true".equalsIgnoreCase(text));
 
         text = configuration.getProperty("groovy.log.classgen");
-        if (text != null) setLogClassgen(text.equalsIgnoreCase("true"));
+        if (text != null) setLogClassgen("true".equalsIgnoreCase(text));
 
         text = configuration.getProperty("groovy.log.classgen.stacktrace.max.depth");
         if (text != null) {
@@ -805,10 +793,10 @@ public class CompilerConfiguration {
         if (text != null) setClasspath(text);
 
         text = configuration.getProperty("groovy.output.verbose");
-        if (text != null) setVerbose(text.equalsIgnoreCase("true"));
+        if (text != null) setVerbose("true".equalsIgnoreCase(text));
 
         text = configuration.getProperty("groovy.output.debug");
-        if (text != null) setDebug(text.equalsIgnoreCase("true"));
+        if (text != null) setDebug("true".equalsIgnoreCase(text));
 
         numeric = 10;
         text = configuration.getProperty("groovy.errors.tolerance", "10");
@@ -826,7 +814,7 @@ public class CompilerConfiguration {
         if (text != null) setScriptBaseClass(text);
 
         text = configuration.getProperty("groovy.recompile");
-        if (text != null) setRecompileGroovySource(text.equalsIgnoreCase("true"));
+        if (text != null) setRecompileGroovySource("true".equalsIgnoreCase(text));
 
         numeric = 100;
         text = configuration.getProperty("groovy.recompile.minimumIntervall"); // legacy misspelling
@@ -1139,14 +1127,12 @@ public class CompilerConfiguration {
      * @since 4.0.0
      */
     private static String defaultTargetBytecode() {
-
-    String javaVersion =
-        Integer.toString((isRunningAndroid() || isDalvik()) ? 8 : Runtime.version().feature());
-    if (JDK_TO_BYTECODE_VERSION_MAP.containsKey(javaVersion)) {
-      return javaVersion;
+        String javaVersion = Integer.toString((isRunningAndroid() || isDalvik()) ? 8 : Runtime.version().feature());
+        if (JDK_TO_BYTECODE_VERSION_MAP.containsKey(javaVersion)) {
+            return javaVersion;
+        }
+        return JDK8;
     }
-    return JDK8;
-  }
 
     /**
      * Whether the bytecode version has preview features enabled (JEP 12)
