@@ -20,6 +20,7 @@ package org.codehaus.groovy.reflection.android;
 
 public abstract class AndroidSupport {
   private static final boolean IS_ANDROID;
+  private static final boolean IS_STACKWALKER_AVAILABLE;
 
   static {
     boolean isAndroid = true;
@@ -29,6 +30,15 @@ public abstract class AndroidSupport {
       isAndroid = false;
     }
     IS_ANDROID = isAndroid;
+
+    // only availavle in java 9+
+    boolean isStackwalkerAvailable = true;
+    try {
+      Class.forName("java.lang.StackWalker", false, AndroidSupport.class.getClassLoader());
+    } catch (ClassNotFoundException e) {
+      isStackwalkerAvailable = false;
+    }
+    IS_STACKWALKER_AVAILABLE = isStackwalkerAvailable;
   }
 
   public static boolean isRunningAndroid() {
@@ -37,5 +47,9 @@ public abstract class AndroidSupport {
 
   public static boolean isDalvik() {
     return System.getProperty("java.vm.name", "").contains("Dalvik");
+  }
+
+  public static boolean isStackwalkerAvailable() {
+    return IS_STACKWALKER_AVAILABLE;
   }
 }
