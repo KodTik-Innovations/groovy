@@ -45,7 +45,9 @@ shadowJar {
 dependencies {
     implementation 'org.apache.groovy:groovy:5.0.0-alpha-11:grooid'
     implementation 'org.ow2.asm:asm:9.7.1'
-    implementation 'com.github.KodTik-Innovations:java-desktop:main-SNAPSHOT'	
+    implementation 'com.github.KodTik-Innovations:java-desktop:f3f57726c7'	
+    
+    implementation project(':classvalue')
 }
 
 publishing {
