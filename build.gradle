@@ -38,7 +38,7 @@ shadowJar {
 
     dependencies {
         exclude(dependency('org.ow2.asm:asm:9.7.1'))
-        exclude(dependency('com.github.KodTik-Innovations:java-desktop:main-SNAPSHOT'))
+        exclude(dependency('com.github.KodTik-Innovations:java-desktop:f3f57726c7'))
     }
 }
 
