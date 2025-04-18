@@ -1,0 +1,63 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'    
+    id 'com.diffplug.spotless' version '6.25.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.assemble.dependsOn tasks.shadowJar
+tasks.build.dependsOn tasks.shadowJar
+
+spotless {
+    java {
+        target "**/*.java"		  
+        googleJavaFormat()
+    }
+}
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+shadowJar {        
+    archiveFileName.set("${project.name}.jar")
+
+    dependencies {
+        exclude(dependency('org.ow2.asm:asm:9.8'))
+        exclude(dependency('com.github.KodTik-Innovations:java-desktop:f3f57726c7'))
+    }
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
+    implementation 'org.ow2.asm:asm:9.8'
+    implementation 'com.github.KodTik-Innovations:java-desktop:f3f57726c7'	
+    
+    implementation project(':classvalue')
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->            
+            groupId = 'org.kodtik.ide'
+            artifactId = 'groovy'
+            version = '5.0.0-alpha-12' 
+         
+            from project.shadow.component(publication) 
+        }
+    }
+}
