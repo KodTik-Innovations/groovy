@@ -6,7 +6,7 @@ import org.codehaus.groovy.control.CompilerConfiguration;
 
 public class App {
     public static void main(String[] args) {
-        File groovyFile = new File("src/main/resources/test.groovy");
+        File groovyFile = new File("src/main/resources/Test.groovy");
         File outputDir = new File(groovyFile.getParentFile(), "out");
 
         if (!outputDir.exists()) {
