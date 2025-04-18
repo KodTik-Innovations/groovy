@@ -34,18 +34,16 @@ java {
 }
 
 shadowJar {        
-    archiveFileName.set("${project.name}.jar")
+    archiveFileName.set("${project.rootProject.name}.jar")
 
     dependencies {
         exclude(dependency('org.ow2.asm:asm:9.8'))
-        exclude(dependency('com.github.KodTik-Innovations:java-desktop:f3f57726c7'))
     }
 }
 
 dependencies {
     implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
     implementation 'org.ow2.asm:asm:9.8'
-    implementation 'com.github.KodTik-Innovations:java-desktop:f3f57726c7'	
     
     implementation project(':classvalue')
 }
