@@ -29,4 +29,4 @@ jobs:
         if: ${{ !github.head_ref }}
         with:
           name: groovy
-          path: build/libs/groovy.jar
+          path: lib/build/libs/groovy.jar
