@@ -37,14 +37,14 @@ shadowJar {
     archiveFileName.set("${project.name}.jar")
 
     dependencies {
-        exclude(dependency('org.ow2.asm:asm:9.7.1'))
+        exclude(dependency('org.ow2.asm:asm:9.8'))
         exclude(dependency('com.github.KodTik-Innovations:java-desktop:f3f57726c7'))
     }
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy:5.0.0-alpha-11:grooid'
-    implementation 'org.ow2.asm:asm:9.7.1'
+    implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
+    implementation 'org.ow2.asm:asm:9.8'
     implementation 'com.github.KodTik-Innovations:java-desktop:f3f57726c7'	
     
     implementation project(':classvalue')
@@ -55,7 +55,7 @@ publishing {
         shadow(MavenPublication) { publication ->            
             groupId = 'org.kodtik.ide'
             artifactId = 'groovy'
-            version = '5.0.0-alpha-11' 
+            version = '5.0.0-alpha-12' 
          
             from project.shadow.component(publication) 
         }
