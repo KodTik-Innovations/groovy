@@ -9,9 +9,7 @@ public class App {
         File groovyFile = new File("src/main/resources/Test.groovy");
         File outputDir = new File(groovyFile.getParentFile(), "out");
 
-        if (!outputDir.exists()) {
-            outputDir.mkdirs();
-        }
+        if (!outputDir.exists()) outputDir.mkdirs();
 
         try {
             System.out.println("Initializing compiler configuration...");
