@@ -35,12 +35,12 @@ android {
 	
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 	
     kotlinOptions {
-        jvmTarget = '21'
+        jvmTarget = '11'
     }
 
     buildFeatures {
@@ -63,7 +63,7 @@ dependencies {
         	      
     implementation 'com.blankj:utilcodex:1.31.1'    
 
-    implementation 'com.github.KodTik-Innovations:groovy:main-SNAPSHOT'
+    implementation 'com.github.KodTik-Innovations:groovy:groovy-3.0.22-SNAPSHOT'
     implementation 'com.github.KodTik-Innovations:java-stubs:1.0.0'
 	
     implementation project(':resources')  

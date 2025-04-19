@@ -27,7 +27,7 @@ dependencies {
     // This dependency is used by the application.	
         
     implementation files("${project(':lib').buildDir}/libs/${rootProject.name}.jar")
-    implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
+    implementation 'org.codehaus.groovy:groovy:3.0.22:grooid'
     implementation 'org.ow2.asm:asm:9.8'
 }
 
@@ -39,8 +39,8 @@ spotless {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 application {
