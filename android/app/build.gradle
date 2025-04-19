@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdk 36
-    namespace 'org.groovy.runner'
+    namespace 'groovy.runner'
     
     packagingOptions {
         resources {
@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'org.groovy.runner'
+        applicationId 'groovy.runner'
         minSdk 26
         targetSdk 36
         versionCode 1
@@ -62,8 +62,10 @@ dependencies {
     implementation 'androidx.databinding:viewbinding:8.10.0-alpha05'        
         	      
     implementation 'com.blankj:utilcodex:1.31.1'    
-   
+
+    implementation 'com.github.KodTik-Innovations:groovy:main-SNAPSHOT'
+	
     implementation project(':resources')  
-      
+    
     coreLibraryDesugaring('com.android.tools:desugar_jdk_libs_nio:2.1.3')
 }

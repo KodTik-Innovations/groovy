@@ -1,4 +1,4 @@
-package org.groovy.runner
+package groovy.runner
 
 import android.content.Context
 import java.io.BufferedReader

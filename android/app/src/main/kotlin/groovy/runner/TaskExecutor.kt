@@ -1,4 +1,4 @@
-package org.groovy.runner
+package groovy.runner
 
 import java.util.concurrent.Callable
 import java.util.concurrent.CompletableFuture
