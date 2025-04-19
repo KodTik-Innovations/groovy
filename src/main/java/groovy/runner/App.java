@@ -1,6 +1,8 @@
 package groovy.runner;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import org.codehaus.groovy.control.CompilationUnit;
 import org.codehaus.groovy.control.CompilerConfiguration;
 
@@ -14,9 +16,13 @@ public class App {
     try {
       System.out.println("Initializing compiler configuration...");
 
+      Map<String, Boolean> options = new HashMap<>();
+      options.put(CompilerConfiguration.INVOKEDYNAMIC, false);
+
       CompilerConfiguration configuration = new CompilerConfiguration();
       configuration.setTargetBytecode(CompilerConfiguration.JDK8);
       configuration.setTargetDirectory(outputDir);
+      configuration.setOptimizationOptions(options);
 
       System.out.println("Creating compilation unit...");
 
