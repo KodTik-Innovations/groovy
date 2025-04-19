@@ -32,9 +32,9 @@ public class SyntaxErrorMessage extends Message {
 
   public SyntaxErrorMessage(SyntaxException cause, SourceUnit source) {
     this.source = source;
-    
+
     // deenu modify: fix error line
-    /** Returns the valid error line for invalid SyntaxException. */
+    /* Returns the valid error line for invalid SyntaxException. */
     String message = cause.getMessage();
     boolean isEOF = message != null && message.contains("EOF");
 
