@@ -79,17 +79,22 @@ class MainActivity : AppCompatActivity() {
         future.whenComplete { result, error ->
             val outputBuilder = StringBuilder()
 
-            if (error != null) {
-                System.setErr(originalErr)
+            System.setOut(originalOut)
+            System.setErr(originalErr)
 
+            val stdOut = outBaos.toString()
+            val stdErr = errBaos.toString()
+
+            outputBuilder.append("\n[STDOUT]\n").append(stdOut)
+
+            if (error != null) {
                 val sw = StringWriter()
                 error.printStackTrace(PrintWriter(sw))
-                outputBuilder.append("\n[STDERR]\n").append(originalErr.toString())
-
                 outputBuilder.append("\n[BUILD ERROR]\n").append(sw.toString())
-            } else {
-                System.setOut(originalOut)
-                outputBuilder.append("\n[BUILD RESULT] $originalOut")
+            }
+
+            if (stdErr.isNotBlank()) {
+                outputBuilder.append("\n[STDERR]\n").append(stdErr)
             }
 
             runOnUiThread {
