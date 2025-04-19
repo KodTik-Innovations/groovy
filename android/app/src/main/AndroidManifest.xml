@@ -1,0 +1,33 @@
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application
+        android:name=".MyApp"
+        android:allowBackup="true"
+        android:debuggable="false"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="HardcodedDebugMode"
+        tools:targetApi="34">
+        <property
+            android:name="REQUIRE_SECURE_ENV"
+            android:value="1"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

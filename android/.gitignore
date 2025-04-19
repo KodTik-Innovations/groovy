@@ -1,0 +1,12 @@
+.gradle
+.idea/*.json
+.kotlin
+.androidide
+/app/build
+/build
+/common/build
+/utils/build
+/resources/build
+/project-api/build
+/progress-dialog/build
+local.properties
