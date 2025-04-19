@@ -99,8 +99,9 @@ public class SyntaxException extends GroovyException {
    *
    * @param line the line number where the error occurred
    */
-   
-  // deenu modify: add setter
+
+  // deenu modify: add setters
+
   public void setLine(int line) {
     setStartLine(line);
   }
