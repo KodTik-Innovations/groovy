@@ -34,11 +34,12 @@ java {
 }
 
 shadowJar {        
-    archiveFileName.set("${project.rootProject.name}.jar")
-                   
+    archiveFileName.set("${project.rootProject.name}.jar")       
+              
     dependencies {
         exclude(dependency('org.ow2.asm:asm:9.8'))
         exclude(dependency('com.github.KodTik-Innovations:java-stubs:1.0.0'))
+        exclude(dependency('info.picocli:picocli:4.7.7'))
     }
 }
 
@@ -46,6 +47,7 @@ dependencies {
     implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
     implementation 'org.ow2.asm:asm:9.8'        
     implementation 'com.github.KodTik-Innovations:java-stubs:1.0.0'
+    implementation 'info.picocli:picocli:4.7.7'
 }
 
 publishing {
