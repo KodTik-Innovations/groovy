@@ -65,7 +65,8 @@ dependencies {
 
     implementation 'com.github.KodTik-Innovations:groovy:main-SNAPSHOT'
     implementation 'com.github.KodTik-Innovations:java-stubs:1.0.0'
-	
+	implementation 'info.picocli:picocli:4.7.7'
+  
     implementation project(':resources')  
     
     coreLibraryDesugaring('com.android.tools:desugar_jdk_libs_nio:2.1.3')
