@@ -35,7 +35,7 @@ java {
 
 shadowJar {        
     archiveFileName.set("${project.rootProject.name}.jar")
-
+                   
     dependencies {
         exclude(dependency('org.ow2.asm:asm:9.8'))
         exclude(dependency('com.github.KodTik-Innovations:java-stubs:1.0.0'))
