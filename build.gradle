@@ -26,8 +26,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.	
         
-    implementation files("${project(':lib').buildDir}/libs/${rootProject.name}.jar")
-    implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
+    implementation files("${project(':lib').buildDir}/libs/${rootProject.name}.jar")    
     implementation 'org.ow2.asm:asm:9.8'
 }
 
