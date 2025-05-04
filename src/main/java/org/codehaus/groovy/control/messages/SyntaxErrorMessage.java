@@ -44,6 +44,8 @@ public class SyntaxErrorMessage extends Message {
             : null;
     String errorName = null;
 
+    SyntaxException delegate = null;
+
     if (isEOF) {
       if (errorLineString != null && errorLineString.trim().isEmpty()) {
         int line = getValidErrorLine(cause.getLine());
@@ -52,16 +54,18 @@ public class SyntaxErrorMessage extends Message {
           errorName = errorLineString.trim();
           int start = errorLineString.indexOf(errorName) + 1;
           int end = start + errorName.length();
-          cause.setLine(line);
-          cause.setStartColumn(start);
-          cause.setEndColumn(end);
+
+          delegate =
+              new SyntaxException(message, cause.getCause(), line, start, cause.getEndLine(), end);
         }
       } else if (errorLineString != null) {
         errorName = errorLineString.trim();
         int start = errorLineString.indexOf(errorName) + 1;
         int end = start + errorName.length();
-        cause.setStartColumn(start);
-        cause.setEndColumn(end);
+
+        delegate =
+            new SyntaxException(
+                message, cause.getCause(), cause.getStartLine(), start, cause.getEndLine(), end);
       }
     } else if (message != null) {
       Matcher matcher = Pattern.compile("'(.*?)'|\\[(.*?)\\]").matcher(message);
@@ -75,9 +79,10 @@ public class SyntaxErrorMessage extends Message {
             int start = errorLineString.indexOf(errorName) + 1;
             int end = start + errorName.length();
             if (cause.getStartColumn() != start || cause.getEndColumn() != end) {
-              cause.setStartColumn(start);
-              cause.setEndColumn(end);
-              cause.setEndLine(end);
+
+              delegate =
+                  new SyntaxException(
+                      message, cause.getCause(), cause.getStartLine(), start, end, end);
             }
           } else if (errorName.equals("\\n")) {
             errorLineString = this.source.getSource().getLine(cause.getLine(), new Janitor());
@@ -85,20 +90,23 @@ public class SyntaxErrorMessage extends Message {
               errorName = errorLineString.replace("import", "").trim();
               int start = errorLineString.indexOf(errorName) + 1;
               int end = start + errorName.length();
-              cause.setStartColumn(start);
-              cause.setEndColumn(end);
-              cause.setEndLine(end);
+
+              delegate =
+                  new SyntaxException(
+                      message, cause.getCause(), cause.getStartLine(), start, end, end);
             }
           } else if (errorName.contains("}")) {
-            cause.setLine(cause.getLine() - 1);
+
             errorLineString = this.source.getSource().getLine(cause.getLine(), new Janitor());
             if (errorLineString != null && !errorLineString.trim().isEmpty()) {
               errorName = errorLineString.trim();
               int start = errorLineString.indexOf(errorName) + 1;
               int end = start + errorName.length();
-              cause.setStartColumn(start);
-              cause.setEndColumn(end);
-              cause.setEndLine(end);
+
+              delegate =
+                  new SyntaxException(
+                      message, cause.getCause(), cause.getLine() - 1, start, end, end);
+
             } else {
               errorName = errorName.replace("\\n", "").replace("}", "").trim();
               int line = getValidErrorLine(cause.getLine(), errorName);
@@ -106,10 +114,8 @@ public class SyntaxErrorMessage extends Message {
               if (errorLineString != null) {
                 int start = errorLineString.indexOf(errorName) + 1;
                 int end = start + errorName.length();
-                cause.setLine(line);
-                cause.setStartColumn(start);
-                cause.setEndColumn(end);
-                cause.setEndLine(end);
+
+                delegate = new SyntaxException(message, cause.getCause(), line, start, end, end);
               }
             }
           } else {
@@ -121,9 +127,10 @@ public class SyntaxErrorMessage extends Message {
               errorName = errorName.trim();
               int start = errorLineString.indexOf(errorName) + 1;
               int end = start + errorName.length();
-              cause.setStartColumn(start);
-              cause.setEndColumn(end);
-              cause.setEndLine(end);
+
+              delegate =
+                  new SyntaxException(
+                      message, cause.getCause(), cause.getStartLine(), start, end, end);
             }
           }
         } else {
@@ -133,16 +140,18 @@ public class SyntaxErrorMessage extends Message {
           if (errorLineString != null) {
             int start = errorLineString.indexOf(errorName) + 1;
             int end = start + errorName.length();
-            cause.setLine(line);
-            cause.setStartColumn(start);
-            cause.setEndColumn(end);
-            cause.setEndLine(end);
+
+            delegate = new SyntaxException(message, cause.getCause(), line, start, end, end);
           }
         }
       }
     }
 
-    this.cause = cause;
+    if (delegate != null) {
+      this.cause = delegate;
+    } else {
+      this.cause = cause;
+    }
     cause.setSourceLocator(source != null ? source.getName() : null);
   }
 
