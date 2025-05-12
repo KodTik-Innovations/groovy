@@ -21,6 +21,8 @@ package org.codehaus.groovy.reflection.android;
 public abstract class AndroidSupport {
   private static final boolean IS_ANDROID;
 
+  // deenu modify: add isDalvik
+
   static {
     boolean isAndroid = true;
     try {
