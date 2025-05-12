@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -84,7 +85,7 @@ public class GroovyMain {
   // automatically output the result of each script
   private boolean autoOutput;
 
-  // automatically split each line using the splitPattern
+  // automatically split each line using the splitpattern
   private boolean autoSplit;
 
   // The pattern used to split the current line
@@ -177,7 +178,7 @@ public class GroovyMain {
       description = "The Groovy command line processor.",
       sortOptions = false,
       versionProvider = VersionProvider.class)
-  private static final class GroovyCommand {
+  private static class GroovyCommand {
 
     // IMPLEMENTATION NOTE:
     // classpath must be the first argument, so that the `startGroovy(.bat)` script
@@ -248,7 +249,7 @@ public class GroovyMain {
 
     @Option(
         names = {"-pr", "--enable-preview"},
-        description = "Enable preview Java features (jdk12+ only)")
+        description = "Enable preview Java features (JEP 12) (jdk12+ only)")
     private boolean previewFeatures;
 
     @Option(
@@ -265,6 +266,11 @@ public class GroovyMain {
         description =
             "Split lines using splitPattern (default '\\s') using implicit 'split' variable")
     private String splitPattern;
+
+    @Option(
+        names = {"--indy"},
+        description = "Enables compilation using invokedynamic")
+    private boolean indy;
 
     @Option(
         names = {"--configscript"},
@@ -356,6 +362,11 @@ public class GroovyMain {
 
       for (String optimization : disableopt) {
         main.conf.getOptimizationOptions().put(optimization, false);
+      }
+
+      if (indy) {
+        System.setProperty("groovy.target.indy", "true");
+        main.conf.getOptimizationOptions().put("indy", true);
       }
 
       if (scriptBaseClass != null) {
@@ -574,25 +585,17 @@ public class GroovyMain {
     class DoSetContext implements PrivilegedAction<Object> {
       ClassLoader classLoader;
 
-      DoSetContext(ClassLoader loader) {
+      public DoSetContext(ClassLoader loader) {
         classLoader = loader;
       }
 
-      @Override
       public Object run() {
         current.setContextClassLoader(classLoader);
         return null;
       }
     }
 
-    doPrivileged(new DoSetContext(shell.getClassLoader()));
-  }
-
-  @SuppressWarnings(
-      "removal") // TODO a future Groovy version should perform the operation not as a privileged
-  // action
-  private static <T> T doPrivileged(PrivilegedAction<T> action) {
-    return java.security.AccessController.doPrivileged(action);
+    AccessController.doPrivileged(new DoSetContext(shell.getClassLoader()));
   }
 
   /** Process the input files. */
