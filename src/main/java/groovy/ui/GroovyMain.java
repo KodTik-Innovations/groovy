@@ -157,9 +157,9 @@ public class GroovyMain {
     public static class VersionProvider implements IVersionProvider {
         @Override
         public String[] getVersion() {
-                // deenu modify: check android
+                        // deenu modify: check android
       String version =
-          (isRunningAndroid() || isDalvik()) ? "1.8" : System.getProperty("java.version");
+          (isRunningAndroid() || isDalvik()) ? "1.8" : System.getProperty("java.version");            
             return new String[] {
                     "Groovy Version: " + GroovySystem.getVersion() + " JVM: " + version +
                     " Vendor: " + System.getProperty("java.vm.vendor")  + " OS: " + System.getProperty("os.name")
@@ -212,7 +212,7 @@ public class GroovyMain {
         @Option(names = {"-pa", "--parameters"}, description = "Generate metadata for reflection on method parameter names (jdk8+ only)")
         private boolean parameterMetadata;
 
-        @Option(names = {"-pr", "--enable-preview"}, description = "Enable preview Java features (JEP 12) (jdk12+ only)")
+        @Option(names = {"-pr", "--enable-preview"}, description = "Enable preview Java features (jdk12+ only)")
         private boolean previewFeatures;
 
         @Option(names = "-l", arity = "0..1", paramLabel = "<port>", description = "Listen on a port and process inbound lines (default: 1960)")
