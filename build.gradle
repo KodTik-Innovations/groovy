@@ -12,8 +12,8 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.assemble.dependsOn tasks.shadowJar
@@ -44,7 +44,7 @@ shadowJar {
 }
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:3.0.24:grooid'
+    implementation 'org.apache.groovy:groovy:5.0.0-alpha-12:grooid'
     implementation 'org.ow2.asm:asm:9.8'        
     implementation 'com.github.KodTik-Innovations:java-stubs:1.1.0'
     implementation 'info.picocli:picocli:4.7.7'
@@ -55,7 +55,7 @@ publishing {
         shadow(MavenPublication) { publication ->            
             groupId = 'org.kodtik.ide'
             artifactId = 'groovy'
-            version = '3.0.24' 
+            version = '5.0.0-alpha-12A' 
          
             from project.shadow.component(publication) 
         }
