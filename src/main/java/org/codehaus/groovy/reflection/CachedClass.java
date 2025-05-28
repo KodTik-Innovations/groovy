@@ -59,8 +59,12 @@ public class CachedClass {
   private static <M extends AccessibleObject & Member> boolean isAccessibleOrCanSetAccessible(M m) {
     final int modifiers = m.getModifiers();
     final Class<?> declaringClass = m.getDeclaringClass();
-    // deenu modify: use getPackage().getName()
-    if (isPublic(modifiers) && declaringClass.getPackage().getName().startsWith("sun.")) {
+
+    // deenu modify: fix getPackageName
+    Package pkg = declaringClass.getPackage();
+    String packageName = (pkg != null) ? pkg.getName() : "";
+
+    if (isPublic(modifiers) && packageName.startsWith("sun.")) {
       return false;
     }
     if (isProtected(modifiers) && isPublic(declaringClass.getModifiers())) {
