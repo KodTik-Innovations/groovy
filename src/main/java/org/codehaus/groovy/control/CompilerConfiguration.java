@@ -127,6 +127,9 @@ public class CompilerConfiguration {
   /** This (<code>"24"</code>) is the value for targetBytecode to compile for a JDK 24. */
   public static final String JDK24 = "24";
 
+  /** This (<code>"25"</code>) is the value for targetBytecode to compile for a JDK 25. */
+  public static final String JDK25 = "25";
+
   /** JDK version to bytecode version mapping. */
   public static final Map<String, Integer> JDK_TO_BYTECODE_VERSION_MAP =
       Maps.of(
@@ -164,13 +167,15 @@ public class CompilerConfiguration {
           JDK23,
           Opcodes.V23,
           JDK24,
-          Opcodes.V24);
+          Opcodes.V24,
+          JDK25,
+          Opcodes.V25);
 
   public static final String DEFAULT_TARGET_BYTECODE = defaultTargetBytecode();
 
   /** The valid targetBytecode values. */
   public static final String[] ALLOWED_JDKS =
-      JDK_TO_BYTECODE_VERSION_MAP.keySet().toArray(new String[JDK_TO_BYTECODE_VERSION_MAP.size()]);
+      JDK_TO_BYTECODE_VERSION_MAP.keySet().toArray(new String[0]);
 
   /** The ASM API version used when loading/parsing classes and generating proxy adapter classes. */
   public static final int ASM_API_VERSION = Opcodes.ASM9;
@@ -1135,8 +1140,8 @@ public class CompilerConfiguration {
    * @return the default target bytecode compatibility level
    * @since 4.0.0
    */
-  // deenu modify: return java version 8
 
+  // deenu modify: return java version 8
   private static String defaultTargetBytecode() {
     String javaVersion =
         Integer.toString((isRunningAndroid() || isDalvik()) ? 8 : Runtime.version().feature());

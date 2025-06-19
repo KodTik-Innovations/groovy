@@ -50,6 +50,7 @@ public class VMPluginFactory {
           ClassLoader loader = VMPluginFactory.class.getClassLoader();
           // deenu modify: check isRunningAndroid, isDalvik
           int specVer = (isRunningAndroid() || isDalvik()) ? 8 : Runtime.version().feature();
+
           for (Map.Entry<Integer, String> entry : PLUGIN_MAP.entrySet()) {
             if (specVer >= entry.getKey()) {
               String fullName = entry.getValue();
