@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'    
     id 'com.diffplug.spotless' version '7.0.3'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.gradleup.shadow' version '9.1.0'
 }
 
 repositories {
@@ -29,13 +29,14 @@ spotless {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 shadowJar {        
     archiveFileName.set("${project.rootProject.name}.jar")       
-              
+    archiveClassifier.set("") 
+       
     dependencies {
         exclude(dependency('org.ow2.asm:asm:9.8'))
         exclude(dependency('com.github.KodTik-Innovations:java-stubs:1.2.0'))
@@ -55,9 +56,9 @@ publishing {
         shadow(MavenPublication) { publication ->            
             groupId = 'org.kodtik.ide'
             artifactId = 'groovy'
-            version = '5.0.1-beta' 
+            version = '5.0.1-beta01' 
          
-            from project.shadow.component(publication) 
+            from(components.shadow)
         }
     }
 }
