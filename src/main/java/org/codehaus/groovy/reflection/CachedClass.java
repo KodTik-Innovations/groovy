@@ -64,7 +64,7 @@ public class CachedClass {
     Package pkg = declaringClass.getPackage();
     String packageName = (pkg != null) ? pkg.getName() : "";
 
-    if (isPublic(modifiers) && packageName.startsWith("sun.")) {
+    if (isPublic(modifiers) && declaringClass.getPackageName().startsWith("sun.")) {
       return false;
     }
     if (isProtected(modifiers) && isPublic(declaringClass.getModifiers())) {
