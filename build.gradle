@@ -31,15 +31,15 @@ shadowJar {
     archiveClassifier.set("") 
        
     dependencies {
-        exclude(dependency('org.ow2.asm:asm:9.9'))
+        exclude(dependency('org.ow2.asm:asm:9.9.1'))
         exclude(dependency('com.github.KodTik-Innovations:java-stubs:1.2.0'))
         exclude(dependency('info.picocli:picocli:4.7.7'))
     }
 }
 
 dependencies {
-    implementation 'org.apache.groovy:groovy:5.0.3:grooid'
-    implementation 'org.ow2.asm:asm:9.9'        
+    implementation 'org.apache.groovy:groovy:5.0.4:grooid'
+    implementation 'org.ow2.asm:asm:9.9.1'        
     implementation 'com.github.KodTik-Innovations:java-stubs:1.2.0'
     implementation 'info.picocli:picocli:4.7.7'
 }
@@ -49,7 +49,7 @@ publishing {
         shadow(MavenPublication) { publication ->            
             groupId = 'org.kodtik.innovations'
             artifactId = 'groovy'
-            version = '5.0.3-beta01' 
+            version = '5.0.4-beta01' 
          
             from(components.shadow)
         }
